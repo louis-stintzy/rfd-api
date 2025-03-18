@@ -7,3 +7,9 @@ reusable-form-demo backend
 ## .env
 
 [.env.example](./.env.example)
+
+```sh
+CORS_ORIGIN='*'
+PORT=3200
+JWT_SECRET='ceciestunsecret'
+```
