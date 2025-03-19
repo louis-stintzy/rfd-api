@@ -1,4 +1,5 @@
 import { CreateUserData, UserDbData } from '../@types/auth';
+import { pool } from '../db/db_connect';
 
 export async function findByEmail(email: string): Promise<UserDbData | null> {
   const emailQuery = 'SELECT * FROM users WHERE email = $1';
