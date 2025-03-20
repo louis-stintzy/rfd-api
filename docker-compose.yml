@@ -26,9 +26,7 @@ services:
       - rfd_pgadmin:/var/lib/pgadmin
 
   api:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: lstz/api.reusableform:latest
     container_name: rfd_api
     restart: always
     env_file:
