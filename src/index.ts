@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import router from './routes';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { errorHandler } from './middlewares/errorHandler';
 
 dotenv.config();
 const app = express();
@@ -32,6 +33,10 @@ app.use('/api', router);
 app.use((req: Request, res: Response) => {
   res.status(404).send('Not Found');
 });
+
+// Gestion des erreurs
+app.use(errorHandler);
+
 app.listen(port, () => {
   console.log(`Server listening on ${port}`);
 });
