@@ -28,7 +28,6 @@ jobs:
           context: .
           push: true
           file: ./Dockerfile
-          target: prod
           tags: ${{ secrets.DOCKER_USERNAME }}/api.reusableform:latest
 
   deploy:
@@ -85,7 +84,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: './docker-compose.prod.yml'
+          source: './docker-compose.yml'
           target: '/home/rfd-deploy/rfd/api'
 
       - name: Deploy API on VPS
