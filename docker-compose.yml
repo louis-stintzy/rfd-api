@@ -1,0 +1,49 @@
+services:
+  db:
+    image: postgres:16
+    container_name: rfd_db
+    restart: always
+    env_file:
+      - .env
+    # ports: // pas de redirection de port pour la base de données, on ne veut pas qu'elle soit accessible depuis l'extérieur (seulement depuis l'api et pgadmin)
+    environment:
+      - POSTGRES_INITDB_ARGS=--data-checksums
+      - APP_DB_PASSWORD=${APP_DB_PASSWORD}
+    volumes:
+      - rfd_data:/var/lib/postgresql/data
+      - ./db_init/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db_init/set_pwd.sh:/docker-entrypoint-initdb.d/set_pwd.sh
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: rfd_pgadmin
+    restart: always
+    env_file:
+      - .env.pgadmin
+    ports:
+      - '3303:80'
+    volumes:
+      - rfd_pgadmin:/var/lib/pgadmin
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rfd_api
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - '3302:3302'
+    depends_on:
+      - db
+
+volumes:
+  rfd_data:
+  rfd_pgadmin:
+
+networks:
+  default:
+    name: rfd_network
+    external: true
+# docker network create rfd_network // pour créer le réseau
