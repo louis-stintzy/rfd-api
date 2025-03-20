@@ -74,7 +74,7 @@ jobs:
       - name: Create .env.pgadmin file on VPS
         run: |
           ssh -o "StrictHostKeyChecking=no" -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-          cd /home/${{ secrets.SSH_USER }}/rfd-api
+          cd /home/${{ secrets.SSH_USER }}/rfd/api
           echo PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL }} >> .env.pgadmin
           echo PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }} >> .env.pgadmin
           EOF
