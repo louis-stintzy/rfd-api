@@ -38,3 +38,8 @@ CREATE TABLE IF NOT EXISTS users (
   created_at            TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at            TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Accorder à rfd_db_user l'accès à la séquence users_id_seq
+GRANT USAGE, SELECT, UPDATE ON SEQUENCE users_id_seq TO rfd_db_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, SELECT, UPDATE ON SEQUENCES TO rfd_db_user;
+-- grant all on sequence user_id_seq to myuser; -- pour donner tous les droits
