@@ -11,6 +11,9 @@ services:
       - APP_DB_PASSWORD=${APP_DB_PASSWORD}
     volumes:
       - rfd_data:/var/lib/postgresql/data
+      # pour initialiser la base de données, à condition que les fichiers init.sql et set_pwd.sh soient présents (copiés via github actions)
+      # ces fichiers ne seront lus qu'une seule fois, lors de la création de la base de données (lors du premier démarrage du conteneur)
+      # ca ne marche pas lors des redeploiements, il faut supprimer le volume rfd_data pour que les fichiers soient relus (/!\ les données seront perdues)
       - ./db_init/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./db_init/set_pwd.sh:/docker-entrypoint-initdb.d/set_pwd.sh
 
