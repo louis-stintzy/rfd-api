@@ -26,6 +26,9 @@ app.use(
   })
 );
 
+// Analyser les requêtes entrantes avec des cookies
+app.use(cookieParser());
+
 // Analyser les requêtes entrantes avec des données JSON (remplace body-parser)
 app.use(express.json());
 
@@ -52,3 +55,6 @@ app.use(errorHandler);
 app.listen(port, () => {
   console.log(`Server listening on ${port}`);
 });
+function cookieParser(): any {
+  throw new Error('Function not implemented.');
+}
