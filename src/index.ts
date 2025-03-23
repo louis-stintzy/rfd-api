@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import router from './routes';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import { errorHandler } from './middlewares/errorHandler';
 
 dotenv.config();
@@ -55,6 +56,3 @@ app.use(errorHandler);
 app.listen(port, () => {
   console.log(`Server listening on ${port}`);
 });
-function cookieParser(): any {
-  throw new Error('Function not implemented.');
-}
