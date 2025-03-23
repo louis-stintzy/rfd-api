@@ -65,9 +65,10 @@ jobs:
         run: |
           ssh -o "StrictHostKeyChecking=no" -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
           cd /home/${{ secrets.SSH_USER }}/rfd/api
+          rm -f .env
           echo NODE_ENV=${{ secrets.NODE_ENV }} >> .env
           echo APP_DB_PASSWORD=${{ secrets.APP_DB_PASSWORD }} >> .env
-          echo CORS=${{ secrets.CORS }} >> .env
+          echo CORS_ORIGIN=${{ secrets.CORS_ORIGIN }} >> .env
           echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
           echo DOCKER_TOKEN=${{ secrets.DOCKER_TOKEN }} >> .env
           echo DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} >> .env
@@ -84,6 +85,7 @@ jobs:
         run: |
           ssh -o "StrictHostKeyChecking=no" -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
           cd /home/${{ secrets.SSH_USER }}/rfd/api
+          rm -f .env.pgadmin
           echo PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL }} >> .env.pgadmin
           echo PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }} >> .env.pgadmin
           EOF
