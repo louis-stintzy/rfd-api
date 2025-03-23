@@ -13,6 +13,11 @@ export interface LoginUserData {
   password: string;
 }
 
+export interface UserDecodedData {
+  id: number;
+  role: 'user' | 'admin';
+}
+
 export interface UserDbData {
   id: number;
   email: string;

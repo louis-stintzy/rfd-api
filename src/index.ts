@@ -18,6 +18,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        // todo: créer une erreur CORS
         callback(new Error(`Not allowed by CORS': ${origin}`));
       }
     },
@@ -41,6 +42,7 @@ app.use('/api', router);
 
 // Gestion des erreurs 404
 app.use((req: Request, res: Response) => {
+  // todo: créer une NotFoundError
   res.status(404).send('Not Found');
 });
 

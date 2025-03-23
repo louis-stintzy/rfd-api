@@ -11,6 +11,7 @@ export async function createUser(
   // Verify if the user already exists
   const userExist = await authRepository.findByEmail(email);
   if (userExist) {
+    // todo: créer une ConflictError
     throw new Error('User already exists');
   }
   // Hash the password
@@ -38,16 +39,21 @@ export async function authenticateUser(
   // Find the user by email
   const user = await authRepository.findByEmail(email);
   if (!user) {
-    throw new Error('User or password incorrect (temp: User not found)'); // todo: suppr '->User not found' : ne pas indiquer si l'utilisateur existe ou non (message générique)
+    // todo: suppr '->User not found' : ne pas indiquer si l'utilisateur existe ou non (message générique)
+    // todo: créer une UnauthorizedError
+    throw new Error('User or password incorrect (temp: User not found)');
   }
   // Compare the password with the hash stored in the database
   const match = await bcrypt.compare(password, user.password_hash);
   if (!match) {
-    throw new Error('User or password incorrect (temp: Password incorrect)'); // todo: suppr '->Password incorrect' : ne pas indiquer si l'utilisateur existe ou non (message générique)
+    // todo: suppr '->Password incorrect' : ne pas indiquer si l'utilisateur existe ou non (message générique)
+    // todo: créer une UnauthorizedError
+    throw new Error('User or password incorrect (temp: Password incorrect)');
   }
   // Generate a jwt
   const { JWT_SECRET } = process.env;
   if (!JWT_SECRET) {
+    // todo: créer une ConfigurationError
     throw new Error('JWT_SECRET is not defined in environment variables');
   }
   const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, {
@@ -63,5 +69,23 @@ export async function authenticateUser(
       updatedAt: user.updated_at,
     },
     token,
+  };
+}
+
+export async function getUserById(id: number): Promise<UserPublicData> {
+  // Find the user by id
+  const user = await authRepository.findById(id);
+  if (!user) {
+    // todo: suppr '->User not found' : ne pas indiquer si l'utilisateur existe ou non (message générique)
+    // todo: créer une UnauthorizedError
+    throw new Error('(temp: User not found)');
+  }
+  // Return the user without the password
+  return {
+    id: user.id,
+    email: user.email,
+    role: user.role,
+    createdAt: user.created_at,
+    updatedAt: user.updated_at,
   };
 }

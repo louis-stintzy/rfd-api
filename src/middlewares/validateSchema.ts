@@ -9,6 +9,7 @@ export const validateLoginSchema: RequestHandler<
 > = (req, res, next) => {
   const result = loginSchema.safeParse(req.body);
   if (!result.success) {
+    // todo: créer une BadRequestError
     res
       .status(400)
       .json({ error: 'Invalid input', details: result.error.format() });
@@ -24,6 +25,7 @@ export const validateRegisterSchema: RequestHandler<
 > = (req, res, next) => {
   const result = registerSchema.safeParse(req.body);
   if (!result.success) {
+    // todo: créer une BadRequestError
     res
       .status(400)
       .json({ error: 'Invalid input', details: result.error.format() });

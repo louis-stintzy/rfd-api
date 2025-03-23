@@ -1,6 +1,16 @@
 import { CreateUserData, UserDbData } from '../@types/auth';
 import { pool } from '../db/db_connect';
 
+// todo: Refactor => findByData
+
+export async function findById(id: number): Promise<UserDbData | null> {
+  const idQuery = 'SELECT * FROM users WHERE id = $1';
+  const idValues = [id];
+  const idResult = await pool.query(idQuery, idValues);
+  const user = (idResult.rows[0] as UserDbData) ?? null;
+  return user;
+}
+
 export async function findByEmail(email: string): Promise<UserDbData | null> {
   const emailQuery = 'SELECT * FROM users WHERE email = $1';
   const emailValues = [email];
