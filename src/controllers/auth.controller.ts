@@ -45,7 +45,7 @@ export const login: RequestHandler<
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: 'none', // todo: à remplacer par 'strict' en production (front et back sur le même domaine)
       maxAge: 86400000, // 24h en millisecondes
     });
     res.status(200).json(user);
