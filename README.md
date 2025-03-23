@@ -10,7 +10,9 @@ reusable-form-demo backend
 
 ```sh
 # fichier .env
-CORS_ORIGIN='*'
+NODE_ENV=development
+
+CORS_ORIGIN=''
 PORT=***
 JWT_SECRET='***'
 POSTGRES_USER=myuser

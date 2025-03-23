@@ -26,8 +26,8 @@ export const login: RequestHandler<
     const { user, token } = await authService.authenticateUser(userData);
     res.cookie('token', token, {
       httpOnly: true,
-      // secure: process.env.NODE_ENV === 'production',
-      // sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
       maxAge: 86400000, // 24h en millisecondes
     });
     res.status(200).json(user);

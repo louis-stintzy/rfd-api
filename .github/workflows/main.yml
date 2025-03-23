@@ -65,6 +65,7 @@ jobs:
         run: |
           ssh -o "StrictHostKeyChecking=no" -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
           cd /home/${{ secrets.SSH_USER }}/rfd/api
+          echo NODE_ENV=${{ secrets.NODE_ENV }} >> .env
           echo APP_DB_PASSWORD=${{ secrets.APP_DB_PASSWORD }} >> .env
           echo CORS=${{ secrets.CORS }} >> .env
           echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env

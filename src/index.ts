@@ -7,10 +7,20 @@ import { errorHandler } from './middlewares/errorHandler';
 dotenv.config();
 const app = express();
 const port = process.env.PORT ?? 3000;
+const allowedOrigins = (process.env.CORS_ORIGIN ?? '')
+  .split(',')
+  .map((origin) => origin.trim());
+
 app.use(
-  // à configurer + ajouter middleware pour personnalisé ( if (req.headers !== process.env.CORS_ORIGIN) {)...)
+  // ajouter middleware pour personnalisé ( if (req.headers !== process.env.CORS_ORIGIN) {)...)
   cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`Not allowed by CORS': ${origin}`));
+      }
+    },
     credentials: true, // allow session cookie from browser to pass through
   })
 );
