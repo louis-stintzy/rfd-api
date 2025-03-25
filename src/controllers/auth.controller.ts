@@ -58,7 +58,12 @@ export const logout: RequestHandler = (req, res, next) => {
   try {
     const { token } = req.cookies as { token: string };
     if (token) console.log('Todo: Blacklist token');
-    res.clearCookie('token');
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'none',
+      path: '/',
+    });
     res.status(200).send('Logged out');
   } catch (error) {
     next(error);
